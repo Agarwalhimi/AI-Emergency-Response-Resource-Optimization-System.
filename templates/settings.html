@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+{% block title %}Settings | EmergencyAI{% endblock %}
+{% block heading %}Project Settings{% endblock %}
+{% block content %}
+<div class="page-intro">
+  <div><span class="badge blue">System Control</span><h2>Project configuration.</h2><p>Check the project modules and reset the simulated demo environment before your presentation.</p></div>
+</div>
+<div class="grid-2">
+  <div class="panel">
+    <div class="panel-head"><div><span class="section-kicker">MODEL STATUS</span><h3>Machine Learning</h3></div><span class="status-pill available">Ready</span></div>
+    <div class="setting-row"><span>Algorithm</span><b>Random Forest Classifier</b></div>
+    <div class="setting-row"><span>Training dataset</span><b>Sample emergency records</b></div>
+    <div class="setting-row"><span>Test accuracy</span><b>{{ '%.1f'|format(model_accuracy * 100) }}%</b></div>
+    <div class="setting-row"><span>Prediction classes</span><b>Low · Medium · High · Critical</b></div>
+  </div>
+  <div class="panel">
+    <div class="panel-head"><div><span class="section-kicker">SYSTEM STATUS</span><h3>Demo environment</h3></div><span class="status-pill available">Online</span></div>
+    <div class="setting-row"><span>Emergency records</span><b>{{ emergency_count }}</b></div>
+    <div class="setting-row"><span>Total resources</span><b>{{ resource_count }}</b></div>
+    <div class="setting-row"><span>Available resources</span><b>{{ available_count }}</b></div>
+    <div class="setting-row"><span>Route engine</span><b>Dijkstra · Simulated Graph</b></div>
+  </div>
+</div>
+<div class="panel" style="margin-top:20px">
+  <div class="panel-head"><div><span class="section-kicker">DEMO CONTROL</span><h3>Reset presentation data</h3></div></div>
+  <p style="margin:0;color:#718096;font-size:11px;line-height:1.7">Use this before a fresh demonstration. It clears emergency history, clears the priority queue, and makes all simulated resources available again. Your account is not deleted.</p>
+  <div class="settings-actions">
+    <form method="post" action="{{ url_for('reset_demo_data') }}" onsubmit="return confirm('Reset all demo emergency records and resources?')">
+      <button class="btn danger" type="submit">Reset Demo Data</button>
+    </form>
+  </div>
+</div>
+<div class="panel" style="margin-top:20px">
+  <span class="section-kicker">PROTOTYPE SCOPE</span><h3>What is simulated</h3>
+  <ul class="plain-list"><li>Emergency data is simulated for academic demonstration.</li><li>Road locations and distances come from a predefined graph.</li><li>Resource locations are sample ambulance, fire-engine and rescue-team bases.</li><li>No real ambulance, GPS, traffic or government dispatch API is connected.</li><li>The system demonstrates ML + DSA + Dijkstra integration, not real emergency dispatch.</li></ul>
+</div>
+{% endblock %}

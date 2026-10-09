@@ -1,0 +1,97 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Create account | EmergencyAI</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body class="auth-page">
+  <div class="auth-layout">
+    <section class="auth-hero register-hero">
+      <div class="hero-grid"></div>
+      <a class="auth-logo" href="{{ url_for('login') }}">
+        <span class="logo-mark">E</span>
+        <span><strong>EmergencyAI</strong><small>Response & Resource Optimization</small></span>
+      </a>
+      <div class="hero-content">
+        <div class="hero-label"><span></span> ACADEMIC EMERGENCY OPERATIONS PLATFORM</div>
+        <h1>Build a better<br><em>response workflow.</em></h1>
+        <p>Create an account and explore the complete ML + DSA emergency response prototype.</p>
+        <div class="workflow">
+          <div><b>01</b><span>Report emergency</span></div>
+          <div><b>02</b><span>Predict priority</span></div>
+          <div><b>03</b><span>Assign resource</span></div>
+          <div><b>04</b><span>Find shortest route</span></div>
+        </div>
+      </div>
+      <div class="hero-bottom"><span>COLLEGE PROJECT</span><span>SIMULATED DATA</span><span>2026</span></div>
+    </section>
+
+    <section class="auth-panel">
+      <div class="auth-card register-card">
+        <div class="mobile-logo"><span class="logo-mark">E</span><strong>EmergencyAI</strong></div>
+        <div class="auth-intro">
+          <span class="mini-label">ACCOUNT SETUP</span>
+          <h2>Create account</h2>
+          <p>Set up your access for the emergency operations dashboard.</p>
+        </div>
+
+        {% with messages = get_flashed_messages(with_categories=true) %}
+          {% for category, message in messages %}
+            <div class="auth-alert {{ category }}"><span>{{ "✓" if category == "success" else "!" }}</span>{{ message }}</div>
+          {% endfor %}
+        {% endwith %}
+
+        <form id="registerForm" method="post" action="{{ url_for('register') }}" class="modern-form" novalidate>
+          <label><span>Full name</span><div class="input-box"><span class="input-icon">◯</span><input type="text" name="full_name" value="{{ full_name|default('') }}" placeholder="Your full name" autocomplete="name" required></div></label>
+          <label><span>Email address</span><div class="input-box"><span class="input-icon">✉</span><input type="email" name="email" value="{{ email|default('') }}" placeholder="you@example.com" autocomplete="email" required></div></label>
+          <label><span>Password</span><div class="input-box"><span class="input-icon">⌑</span><input id="regPassword" type="password" name="password" placeholder="At least 6 characters" autocomplete="new-password" required><button type="button" class="password-toggle" onclick="togglePassword('regPassword', this)">Show</button></div></label>
+          <label><span>Confirm password</span><div class="input-box"><span class="input-icon">⌑</span><input id="confirmPassword" type="password" name="confirm_password" placeholder="Re-enter your password" autocomplete="new-password" required><button type="button" class="password-toggle" onclick="togglePassword('confirmPassword', this)">Show</button></div></label>
+          <div id="passwordHint" class="password-hint" aria-live="polite"></div>
+          <button id="registerButton" class="auth-button" type="submit">Create account <b>→</b></button>
+        </form>
+
+        <div class="auth-divider"><span>OR</span></div>
+        <p class="auth-bottom">Already have an account? <a href="{{ url_for('login') }}">Sign in</a></p>
+      </div>
+    </section>
+  </div>
+<script>
+function togglePassword(id, btn) {
+  const input = document.getElementById(id);
+  const show = input.type === "password";
+  input.type = show ? "text" : "password";
+  btn.textContent = show ? "Hide" : "Show";
+}
+const registerForm = document.getElementById('registerForm');
+const regPassword = document.getElementById('regPassword');
+const confirmPassword = document.getElementById('confirmPassword');
+const passwordHint = document.getElementById('passwordHint');
+
+function validatePasswords() {
+  if (!confirmPassword.value) {
+    passwordHint.textContent = '';
+    passwordHint.className = 'password-hint';
+    return true;
+  }
+  if (regPassword.value !== confirmPassword.value) {
+    passwordHint.textContent = 'Passwords do not match.';
+    passwordHint.className = 'password-hint error';
+    return false;
+  }
+  passwordHint.textContent = 'Passwords match.';
+  passwordHint.className = 'password-hint success';
+  return true;
+}
+regPassword.addEventListener('input', validatePasswords);
+confirmPassword.addEventListener('input', validatePasswords);
+registerForm.addEventListener('submit', function(event) {
+  if (!validatePasswords()) {
+    event.preventDefault();
+    confirmPassword.focus();
+  }
+});
+</script>
+</body>
+</html>

@@ -1,0 +1,97 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Sign in | EmergencyAI</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body class="auth-page">
+  <div class="auth-layout">
+    <section class="auth-hero">
+      <div class="hero-grid"></div>
+      <a class="auth-logo" href="{{ url_for('login') }}">
+        <span class="logo-mark">E</span>
+        <span><strong>EmergencyAI</strong><small>Response & Resource Optimization</small></span>
+      </a>
+
+      <div class="hero-content">
+        <div class="hero-label"><span></span> AI-POWERED EMERGENCY DECISION SUPPORT</div>
+        <h1>Respond faster.<br><em>Decide smarter.</em></h1>
+        <p>One academic platform for emergency priority prediction, resource allocation and shortest-route optimization.</p>
+
+        <div class="tech-row">
+          <div><b>AI</b><span>Priority<br>Prediction</span></div>
+          <div><b>DSA</b><span>Resource<br>Queue</span></div>
+          <div><b>PATH</b><span>Dijkstra<br>Routing</span></div>
+        </div>
+      </div>
+
+      <div class="hero-bottom">
+        <span>COLLEGE PROJECT</span>
+        <span>SIMULATED DATA</span>
+        <span>2026</span>
+      </div>
+    </section>
+
+    <section class="auth-panel">
+      <div class="auth-card">
+        <div class="mobile-logo"><span class="logo-mark">E</span><strong>EmergencyAI</strong></div>
+
+        <div class="auth-intro">
+          <span class="mini-label">COMMAND CENTER</span>
+          <h2>Welcome back</h2>
+          <p>Sign in to continue to your emergency operations dashboard.</p>
+        </div>
+
+        {% with messages = get_flashed_messages(with_categories=true) %}
+          {% for category, message in messages %}
+            <div class="auth-alert {{ category }}">
+              <span>{{ "✓" if category == "success" else "!" }}</span>{{ message }}
+            </div>
+          {% endfor %}
+        {% endwith %}
+
+        <form method="post" action="{{ url_for('login', next=request.args.get('next', '')) }}" class="modern-form">
+          <label>
+            <span>Email address</span>
+            <div class="input-box">
+              <span class="input-icon">✉</span>
+              <input type="email" name="email" value="{{ email|default('') }}" placeholder="admin@emergency.ai" autocomplete="email" required autofocus>
+            </div>
+          </label>
+
+          <label>
+            <span>Password</span>
+            <div class="input-box">
+              <span class="input-icon">⌑</span>
+              <input id="loginPassword" type="password" name="password" placeholder="Enter your password" autocomplete="current-password" required>
+              <button type="button" class="password-toggle" onclick="togglePassword('loginPassword', this)">Show</button>
+            </div>
+          </label>
+
+          <button class="auth-button" type="submit">Sign in to dashboard <b>→</b></button>
+        </form>
+
+        <div class="demo-card">
+          <div class="demo-top"><span class="demo-dot"></span><b>Demo access</b><span>For project presentation</span></div>
+          <div class="demo-values"><code>admin@emergency.ai</code><code>admin123</code></div>
+        </div>
+
+        <div class="auth-divider"><span>OR</span></div>
+        <p class="auth-bottom">Don't have an account? <a href="{{ url_for('register') }}">Create account</a></p>
+        <small class="security-note">🔒 Your password is stored using secure hashing.</small>
+      </div>
+    </section>
+  </div>
+
+<script>
+function togglePassword(id, btn) {
+  const input = document.getElementById(id);
+  const show = input.type === "password";
+  input.type = show ? "text" : "password";
+  btn.textContent = show ? "Hide" : "Show";
+}
+</script>
+</body>
+</html>

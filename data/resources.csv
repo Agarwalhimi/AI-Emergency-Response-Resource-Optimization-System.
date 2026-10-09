@@ -1,0 +1,10 @@
+resource_id,type,name,location,status
+A01,AMBULANCE,Ambulance 01,Central Hospital,Available
+A02,AMBULANCE,Ambulance 02,ISBT,Available
+A03,AMBULANCE,Ambulance 03,Clock Tower,Available
+F01,FIRE ENGINE,Fire Engine 01,Patel Nagar,Available
+F02,FIRE ENGINE,Fire Engine 02,ISBT,Available
+F03,FIRE ENGINE,Fire Engine 03,Raipur,Available
+R01,RESCUE TEAM,Rescue Team 01,Prem Nagar,Available
+R02,RESCUE TEAM,Rescue Team 02,Clock Tower,Available
+R03,RESCUE TEAM,Rescue Team 03,Raipur,Available

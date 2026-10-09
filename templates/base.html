@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{% block title %}Emergency Response{% endblock %}</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+  <script defer src="{{ url_for('static', filename='script.js') }}"></script>
+</head>
+<body>
+  <div class="app-shell">
+    <aside class="sidebar" id="sidebar">
+      <div class="brand">
+        <div class="brand-icon">ER</div>
+        <div><strong>EmergencyAI</strong><span>Response System</span></div>
+      </div>
+      <nav>
+        <a class="nav-link {% if request.endpoint == 'dashboard' %}active{% endif %}" href="{{ url_for('dashboard') }}"><span>▦</span>Dashboard</a>
+        <a class="nav-link {% if request.endpoint == 'emergency' %}active{% endif %}" href="{{ url_for('emergency') }}"><span>＋</span>Report Emergency</a>
+        <a class="nav-link {% if request.endpoint == 'resources' %}active{% endif %}" href="{{ url_for('resources') }}"><span>▣</span>Resources</a>
+        <a class="nav-link {% if request.endpoint == 'routes' %}active{% endif %}" href="{{ url_for('routes') }}"><span>⌁</span>Route Optimization</a>
+        <a class="nav-link {% if request.endpoint == 'history' %}active{% endif %}" href="{{ url_for('history') }}"><span>◷</span>History</a>
+        <a class="nav-link {% if request.endpoint == 'settings' %}active{% endif %}" href="{{ url_for('settings') }}"><span>⚙</span>Settings</a>
+      </nav>
+      <div class="sidebar-note"><span class="dot"></span><div><b>Academic Prototype</b><small>Simulated emergency network</small></div></div>
+    </aside>
+    <main class="main">
+      <header class="topbar">
+        <button class="menu-btn" onclick="toggleSidebar()">☰</button>
+        <div><p class="eyebrow">AI EMERGENCY RESPONSE & RESOURCE OPTIMIZATION</p><h1>{% block heading %}Command Dashboard{% endblock %}</h1></div>
+        <div class="top-actions">
+          <span class="system-status"><i></i> Demo System Ready</span>
+          <a class="home-link" href="{{ url_for('landing') }}">⌂ <span>Home</span></a>
+        </div>
+      </header>
+      {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}{% for category, message in messages %}<div class="flash {{ category }}">{{ message }}</div>{% endfor %}{% endif %}
+      {% endwith %}
+      <section class="content">{% block content %}{% endblock %}</section>
+      <footer>AI Emergency Response & Resource Optimization · College Academic Prototype · Simulated data only</footer>
+    </main>
+  </div>
+</body>
+</html>

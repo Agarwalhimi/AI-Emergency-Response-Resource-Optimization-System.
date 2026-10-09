@@ -1,0 +1,18 @@
+{% extends 'base.html' %}{% block title %}Dashboard | EmergencyAI{% endblock %}{% block heading %}Command Dashboard{% endblock %}
+{% block content %}
+<div class="hero"><div><span class="badge blue">Decision Support</span><h2>Emergency operations at a glance.</h2><p>Predict priority, assign the best available resource, and calculate a shortest route using the project's ML and DSA modules.</p></div><a class="btn primary" href="{{ url_for('emergency') }}">＋ Report Emergency</a></div>
+<div class="stats-grid">
+  <div class="stat-card"><span>Total Emergencies</span><strong>{{ stats.total }}</strong><small>Recorded cases</small></div>
+  <div class="stat-card"><span>Active Responses</span><strong>{{ stats.active }}</strong><small>Resources dispatched</small></div>
+  <div class="stat-card"><span>Critical Cases</span><strong class="critical-text">{{ stats.critical }}</strong><small>Highest priority</small></div>
+  <div class="stat-card"><span>Queue Items</span><strong>{{ queue_size }}</strong><small>Priority queue</small></div>
+</div>
+<div class="grid-2">
+  <div class="panel"><div class="panel-head"><div><span class="section-kicker">LIVE QUEUE</span><h3>Recent Emergencies</h3></div><a href="{{ url_for('history') }}">View all →</a></div>
+    {% if recent %}<div class="table-wrap"><table><thead><tr><th>ID</th><th>Type</th><th>Priority</th><th>Location</th><th>Status</th></tr></thead><tbody>{% for row in recent %}<tr><td>#{{ '%03d'|format(row.id) }}</td><td>{{ row.emergency_type }}</td><td><span class="priority {{ row.priority|lower }}">{{ row.priority }}</span></td><td>{{ row.location }}</td><td>{{ row.status }}</td></tr>{% endfor %}</tbody></table></div>{% else %}<div class="empty"><div class="empty-icon">✓</div><b>No emergencies yet</b><p>Report a sample emergency to see the complete workflow.</p></div>{% endif %}
+  </div>
+  <div class="panel"><div class="panel-head"><div><span class="section-kicker">SYSTEM HEALTH</span><h3>Project Modules</h3></div></div>
+    <div class="module-list"><div><span class="module-icon">AI</span><div><b>ML Priority Model</b><small>Random Forest classifier</small></div><strong>{{ '%.0f'|format(model_accuracy * 100) }}%</strong></div><div><span class="module-icon">PQ</span><div><b>Priority Queue</b><small>Heap-based emergency ordering</small></div><strong>Ready</strong></div><div><span class="module-icon">D</span><div><b>Dijkstra Routing</b><small>Shortest path on simulated graph</small></div><strong>Ready</strong></div><div><span class="module-icon">DB</span><div><b>SQLite History</b><small>Stores analyzed emergencies</small></div><strong>Ready</strong></div></div>
+  </div>
+</div>
+{% endblock %}

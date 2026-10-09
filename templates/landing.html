@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#071a2c">
+  <meta name="description" content="AI Emergency Response and Resource Optimization academic decision-support prototype.">
+  <title>EmergencyAI | Emergency Response & Resource Optimization</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body class="landing-body">
+  <header class="landing-nav">
+    <a class="landing-brand" href="{{ url_for('landing') }}" aria-label="EmergencyAI home">
+      <span class="landing-brand-mark">ER</span><span><strong>EmergencyAI</strong><small>Response & Resource Optimization</small></span>
+    </a>
+    <nav class="landing-nav-links" aria-label="Main navigation">
+      <a href="#how-it-works">How it works</a><a href="#modules">Core modules</a>
+      <a class="nav-cta" href="{{ url_for('dashboard') }}">Explore system <span>→</span></a>
+    </nav>
+  </header>
+
+  <main>
+    <section class="landing-hero">
+      <div class="landing-hero-copy">
+        <div class="landing-eyebrow"><span></span> ACADEMIC EMERGENCY DECISION SUPPORT PROTOTYPE</div>
+        <h1>Make every response <em>more informed.</em></h1>
+        <p class="landing-lede">An integrated demonstration of machine learning, data structures and algorithms to help prioritize emergencies, identify suitable resources and calculate shorter routes.</p>
+        <div class="landing-actions">
+          <a class="landing-primary" href="{{ url_for('dashboard') }}">Get Started <span>→</span></a>
+          <a class="landing-secondary" href="#how-it-works">See how it works <span>↓</span></a>
+        </div>
+        <div class="landing-trust-row"><span><i></i> No account required</span><span><i></i> Interactive academic demo</span></div>
+      </div>
+      <div class="landing-visual" aria-label="Illustration of emergency coordination workflow">
+        <div class="visual-glow"></div>
+        <div class="visual-topline"><span><i></i> RESPONSE OVERVIEW</span><b>DEMO NETWORK</b></div>
+        <div class="map-visual">
+          <svg viewBox="0 0 560 340" role="img" aria-label="Illustrative connected road network">
+            <g class="road road-muted"><path d="M28 65 L150 105 L252 48 L355 112 L505 58"/><path d="M28 65 L85 210 L195 268 L355 112 L430 250 L505 58"/><path d="M85 210 L255 185 L430 250 L520 300"/><path d="M150 105 L255 185 L355 112"/><path d="M195 268 L255 185 L330 315"/></g>
+            <path class="road road-active" d="M70 290 L85 210 L255 185 L355 112 L505 58"/>
+            <g class="map-node node-start"><circle cx="70" cy="290" r="12"/><circle cx="70" cy="290" r="4"/></g>
+            <g class="map-node"><circle cx="85" cy="210" r="8"/><circle cx="85" cy="210" r="2.5"/></g>
+            <g class="map-node"><circle cx="255" cy="185" r="8"/><circle cx="255" cy="185" r="2.5"/></g>
+            <g class="map-node"><circle cx="355" cy="112" r="8"/><circle cx="355" cy="112" r="2.5"/></g>
+            <g class="map-node node-end"><circle cx="505" cy="58" r="12"/><path d="M500 58 l4 4 7 -9"/></g>
+            <g class="map-labels"><text x="32" y="322">Central Hospital</text><text x="45" y="190">Clock Tower</text><text x="220" y="166">ISBT</text><text x="326" y="91">Patel Nagar</text><text x="450" y="35">Raipur</text></g>
+          </svg>
+          <div class="map-callout"><span class="callout-icon">↗</span><div><small>SHORTEST ROUTE</small><strong>Dijkstra path found</strong><span>Illustrative road network</span></div></div>
+        </div>
+        <div class="visual-bottom"><div><span class="visual-metric-icon">AI</span><span><b>ML priority</b><small>Low to Critical</small></span></div><div><span class="visual-metric-icon">DSA</span><span><b>Resource matching</b><small>Availability-aware</small></span></div><div><span class="visual-metric-icon">↗</span><span><b>Route planning</b><small>Shortest path</small></span></div></div>
+      </div>
+    </section>
+
+    <section class="landing-stats" aria-label="Project highlights">
+      <div><strong>01</strong><span>Emergency priority<br>classification</span></div><div><strong>02</strong><span>Resource availability<br>and assignment</span></div><div><strong>03</strong><span>Graph-based route<br>optimization</span></div><div><strong>04</strong><span>Emergency records<br>and history</span></div>
+    </section>
+
+    <section class="landing-section" id="how-it-works">
+      <div class="landing-section-heading"><span class="landing-section-label">THE WORKFLOW</span><h2>From emergency report to a clearer response.</h2><p>Each module has a defined role and connects to the next step in the demonstration.</p></div>
+      <div class="workflow-cards">
+        <article><span class="workflow-number">01</span><div class="workflow-icon">✚</div><h3>Report an emergency</h3><p>Enter the incident type, location, injury level and other details.</p></article>
+        <article><span class="workflow-number">02</span><div class="workflow-icon">AI</div><h3>Predict priority</h3><p>The trained Random Forest model estimates Low, Medium, High or Critical priority.</p></article>
+        <article><span class="workflow-number">03</span><div class="workflow-icon">⇄</div><h3>Match a resource</h3><p>The resource manager checks availability and compatible unit types.</p></article>
+        <article><span class="workflow-number">04</span><div class="workflow-icon">⌁</div><h3>Find a route</h3><p>Dijkstra's algorithm calculates a shortest path on the predefined road graph.</p></article>
+      </div>
+    </section>
+
+    <section class="landing-modules" id="modules">
+      <div><span class="landing-section-label">INSIDE THE SYSTEM</span><h2>One connected project. Six useful views.</h2><p>Start at the dashboard, then explore the working modules. No sign-in is needed for this college demonstration.</p><a class="landing-primary" href="{{ url_for('dashboard') }}">Open Dashboard <span>→</span></a></div>
+      <div class="module-link-grid">
+        <a href="{{ url_for('dashboard') }}"><span>▦</span><b>Dashboard</b><small>Overview and latest cases</small><i>↗</i></a>
+        <a href="{{ url_for('emergency') }}"><span>＋</span><b>Report Emergency</b><small>Run the ML workflow</small><i>↗</i></a>
+        <a href="{{ url_for('resources') }}"><span>▣</span><b>Resources</b><small>Availability and release</small><i>↗</i></a>
+        <a href="{{ url_for('routes') }}"><span>⌁</span><b>Route Optimization</b><small>Test Dijkstra paths</small><i>↗</i></a>
+        <a href="{{ url_for('history') }}"><span>◷</span><b>Emergency History</b><small>Review saved cases</small><i>↗</i></a>
+        <a href="{{ url_for('settings') }}"><span>⚙</span><b>Settings & Demo</b><small>Model details and reset</small><i>↗</i></a>
+      </div>
+    </section>
+
+    <section class="landing-disclaimer"><span>ⓘ</span><p><b>Academic prototype notice</b>This project uses sample emergency data, simulated resources and predefined road distances. It is designed to demonstrate an ML + DSA workflow and is not connected to real emergency services, live GPS or traffic systems.</p><a href="{{ url_for('dashboard') }}">Enter demo →</a></section>
+  </main>
+  <footer class="landing-footer"><a class="landing-brand" href="{{ url_for('landing') }}"><span class="landing-brand-mark">ER</span><span><strong>EmergencyAI</strong><small>Response & Resource Optimization</small></span></a><span>College project prototype · Simulated data only</span><a href="{{ url_for('dashboard') }}">Launch system ↑</a></footer>
+</body>
+</html>

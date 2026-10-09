@@ -1,0 +1,54 @@
+{% extends 'base.html' %}
+{% block title %}Route Optimization | EmergencyAI{% endblock %}
+{% block heading %}Route Optimization{% endblock %}
+{% block content %}
+<div class="page-intro"><div><span class="badge purple">Graph + Dijkstra</span><h2>Find the shortest simulated route.</h2><p>Select a starting point and destination. The network below shows the predefined roads and their distances; Dijkstra's algorithm calculates the minimum-distance path.</p></div></div>
+<div class="grid-2 route-page-grid">
+  <form class="panel routes-form" action="{{ url_for('find_route') }}" method="post">
+    <div class="panel-head"><div><span class="section-kicker">ROUTE PLANNER</span><h3>Shortest Path</h3></div></div>
+    <label>Start Location<select name="start" required>{% for location in locations %}<option value="{{ location }}" {% if selected_start == location %}selected{% endif %}>{{ location }}</option>{% endfor %}</select></label>
+    <label>Destination<select name="destination" required>{% for location in locations %}<option value="{{ location }}" {% if selected_destination == location %}selected{% endif %}>{{ location }}</option>{% endfor %}</select></label>
+    <button class="btn primary wide" type="submit">Calculate Shortest Route</button>
+    <p class="route-help">Distances are simulated road lengths in kilometres, not live GPS or traffic data.</p>
+  </form>
+  <div class="panel route-result-panel">
+    <div class="panel-head"><div><span class="section-kicker">RESULT</span><h3>Optimal Path</h3></div>{% if distance is not none %}<span class="metric">{{ distance }} km</span>{% endif %}</div>
+    {% if route %}
+      <div class="route-visual compact">{% for node in route %}<div class="route-node"><span>{{ loop.index }}</span><b>{{ node }}</b></div>{% if not loop.last %}<div class="route-line"></div>{% endif %}{% endfor %}</div>
+      <p class="success-text">✓ Shortest path calculated successfully.</p>
+      <p class="route-help"><b>{{ selected_start }}</b> → <b>{{ selected_destination }}</b> · Total distance: <b>{{ distance }} km</b></p>
+    {% else %}<div class="graph-empty-note">Choose two different locations and select <b>Calculate Shortest Route</b>. The result path will appear here.</div>{% endif %}
+  </div>
+</div>
+<div class="panel network-panel">
+  <div class="panel-head"><div><span class="section-kicker">SIMULATED ROAD NETWORK</span><h3>Road graph and distances</h3></div><span class="network-legend"><i></i> Road connection</span></div>
+  <div class="network-canvas">
+    <svg class="road-graph" viewBox="0 0 760 340" role="img" aria-label="Road graph connecting Central Hospital, Clock Tower, ISBT, Patel Nagar, Prem Nagar and Raipur with distances in kilometres">
+      <g class="road-edges">
+        {% for a,b,w,x1,y1,x2,y2 in [
+          ('Central Hospital','Clock Tower','2 km',115,70,350,70),
+          ('Central Hospital','Patel Nagar','2.5 km',115,70,115,250),
+          ('Clock Tower','ISBT','2 km',350,70,570,150),
+          ('Clock Tower','Raipur','4 km',350,70,650,70),
+          ('ISBT','Patel Nagar','2 km',570,150,115,250),
+          ('ISBT','Prem Nagar','4 km',570,150,570,285),
+          ('Patel Nagar','Prem Nagar','3 km',115,250,570,285),
+          ('Prem Nagar','Raipur','5 km',570,285,650,70)
+        ] %}
+        {% set active_edge = route and a in route and b in route and (route.index(a)-route.index(b))|abs == 1 %}
+        <line x1="{{ x1 }}" y1="{{ y1 }}" x2="{{ x2 }}" y2="{{ y2 }}" class="road-edge {% if active_edge %}road-edge-active{% endif %}" />
+        <text x="{{ (x1+x2)/2 }}" y="{{ (y1+y2)/2 - 8 }}" class="road-distance">{{ w }}</text>
+        {% endfor %}
+      </g>
+      {% for name,x,y in [('Central Hospital',115,70),('Clock Tower',350,70),('ISBT',570,150),('Patel Nagar',115,250),('Prem Nagar',570,285),('Raipur',650,70)] %}
+      <g class="road-node {% if route and name in route %}road-node-active{% endif %}" transform="translate({{ x }},{{ y }})">
+        <circle r="18"></circle><circle r="5" class="node-dot"></circle>
+        <text y="34" text-anchor="middle">{{ name }}</text>
+      </g>
+      {% endfor %}
+    </svg>
+  </div>
+  <p class="network-caption">Each line represents a road connection. Numbers show simulated distances. When a route is calculated, its connected roads and locations are highlighted.</p>
+</div>
+<div class="panel"><div class="panel-head"><div><span class="section-kicker">ALGORITHM</span><h3>How Dijkstra is used here</h3></div></div><div class="three-columns"><div><b>1. Initialize</b><p>Set the starting location's distance to 0 and all other locations to infinity.</p></div><div><b>2. Explore</b><p>Use a min-heap to select the nearest unvisited location.</p></div><div><b>3. Update and return</b><p>Update shorter distances and reconstruct the minimum-distance path.</p></div></div></div>
+{% endblock %}
